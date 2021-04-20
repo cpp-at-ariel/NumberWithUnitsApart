@@ -16,12 +16,15 @@ namespace ariel{
                 }
                 NumberWithUnits(){}
                 ~NumberWithUnits(){}
-                static void read_units(const ifstream& file);
+                friend int compare(const NumberWithUnits& n1, const NumberWithUnits& n2);
+                double convert(const string &from, const string &to, double fromVal);
+                double convertHelp(const string &from, const string &to, double fromVal);
+                static void read_units(ifstream& file);
                 friend NumberWithUnits operator+(const NumberWithUnits& unit1, const NumberWithUnits& unit2);
-                friend NumberWithUnits operator+=(const NumberWithUnits& unit1, const NumberWithUnits& unit2);
-                friend NumberWithUnits operator+(const NumberWithUnits& unit);
+                friend NumberWithUnits operator+=(NumberWithUnits& unit1, const NumberWithUnits& unit2);
+                friend NumberWithUnits operator+(const NumberWithUnits& unit, double num);
                 friend NumberWithUnits operator-(const NumberWithUnits& unit1, const NumberWithUnits& unit2);
-                friend NumberWithUnits operator-=(const NumberWithUnits& unit1, const NumberWithUnits& unit2);
+                friend NumberWithUnits operator-=(NumberWithUnits& unit1, const NumberWithUnits& unit2);
                 friend NumberWithUnits operator-(const NumberWithUnits& unit);
                 friend bool operator>(const NumberWithUnits& unit1, const NumberWithUnits& unit2);
                 friend bool operator>=(const NumberWithUnits& unit1, const NumberWithUnits& unit2);
@@ -29,10 +32,10 @@ namespace ariel{
                 friend bool operator<=(const NumberWithUnits& unit1, const NumberWithUnits& unit2);
                 friend bool operator==(const NumberWithUnits& unit1, const NumberWithUnits& unit2);
                 friend bool operator!=(const NumberWithUnits& unit1, const NumberWithUnits& unit2);
-                friend NumberWithUnits operator++(const NumberWithUnits& unit);       //Prefix
-                friend NumberWithUnits operator++(const NumberWithUnits& unit, int);     //Postfix
-                friend NumberWithUnits operator--(const NumberWithUnits& unit);       //Prefix
-                friend NumberWithUnits operator--(const NumberWithUnits& unit, int);     //Postfix
+                friend NumberWithUnits operator++( NumberWithUnits& unit);       //Prefix
+                friend NumberWithUnits operator++( NumberWithUnits& unit, int);     //Postfix
+                friend NumberWithUnits operator--( NumberWithUnits& unit);       //Prefix
+                friend NumberWithUnits operator--( NumberWithUnits& unit, int);     //Postfix
                 friend NumberWithUnits operator*(const NumberWithUnits& unit, double num);
                 friend NumberWithUnits operator*(double num, const NumberWithUnits& unit);
                 friend ostream& operator<<(const ostream& os, const NumberWithUnits& unit);

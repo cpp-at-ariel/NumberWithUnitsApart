@@ -22,11 +22,11 @@ TEST_CASE("km/m"){
     CHECK((unit1+unit2)==unitC1);
     CHECK((unit2+=unit1)==unitC1);
     CHECK_FALSE((unit2+=unit1)==unitC2);
-    NumberWithUnits unitC3{0.5, "km"};
+    NumberWithUnits unitC3{-1.5, "km"};
     CHECK((unit1-unit2)==unitC3);
-    NumberWithUnits unitC4{500, "m"};
-    CHECK((unit2-unit1)==unitC3);
-    CHECK((unit2-unit1)==unitC3);
+    NumberWithUnits unitC4{1500, "m"};
+    CHECK((unit2-unit1)==unitC4);
+    CHECK((unit2-unit1)!=unitC3);
 }
 TEST_CASE("boolean"){
     NumberWithUnits unit1{101, "cm"};
@@ -43,21 +43,21 @@ TEST_CASE("boolean"){
     CHECK(unitB2>=unitB1);
     CHECK(unitB1>=unitB3);
     CHECK(unitB3>=unitB1);
-    CHECK(unit1<unitB2);
+    CHECK(unitB1<unitB2);
 
     NumberWithUnits unitC1{1, "kg"};
     NumberWithUnits unitC2{1000, "g"};
-    CHECK_FALSE(unit2!=unit1);
+    CHECK_FALSE(unitC2!=unitC1);
     CHECK(unitC2==unitC1);
     CHECK(unitC2<=unitC1);
 
-    NumberWithUnits unitD1{0.0001, "ton"};
+    NumberWithUnits unitD1{0.001, "ton"};
     CHECK(unitC1==unitD1);
     CHECK(unitC1==unitC2);
 
-    NumberWithUnits unitD2{0.0002, "ton"};
+    NumberWithUnits unitD2{0.002, "ton"};
     CHECK(unitC1!=unitD2);
-    CHECK(unitC1!=unitC2);
+    CHECK(unitC2!=unitD2);
 }
 TEST_CASE("postfix/prefix"){
     NumberWithUnits unit1{1, "hour"};
@@ -65,10 +65,9 @@ TEST_CASE("postfix/prefix"){
     NumberWithUnits unit3{180, "min"};
     CHECK(++unit1==unit2);
     CHECK(++unit1==unit3);
-    CHECK(unit1++==unit1);
     NumberWithUnits unit4{4, "hour"};
-    CHECK(unit1==unit4);
-    CHECK(--unit1==++unit3); //Now it's 2 hours
+    CHECK_FALSE(unit1++==unit4);
+    CHECK(--unit1==unit3); //Now it's 3 hours
     CHECK(unit1--==unit3);
 }
 
