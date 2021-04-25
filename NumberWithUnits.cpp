@@ -4,50 +4,61 @@
 #include <stdexcept>
 #include <map>
 #include <string.h>
+#include "graph.cpp"
 #include "NumberWithUnits.hpp"
-// #define BOOL true
 
 using namespace std;
-//m -> cm
-//cm -> m
-//km -> m
-//m -> km
+
 namespace ariel
 {
-    static map<string, map<string, double>> convertor; // convertor O(3)
+    static graph g;
+    // static map<string, map<string, double>> convertor; // convertor O(3)
 
-    double convertHelp(const string &from, const string &to, double fromVal)
-    {
-        if (from == to)
-        {
+    double convert(const string &from, const string &to, double fromVal){
+        if(from == to){
             return fromVal;
         }
-        if (convertor.at(from).count(to) != 0)
-        {
-            return fromVal * convertor.at(from).at(to);
+        double retVal = g.ThereIsPath(from, to);
+        // cout<< retVal<<endl;
+        if(retVal > -1){
+            return fromVal*retVal;
         }
-        __throw_invalid_argument("Not valid convertion");
-        
+         __throw_invalid_argument("Not valid convertion");
     }
 
-    double convert(const string &from, const string &to, double fromVal)
-    {
-        if (from == to)
-        {
-            return fromVal;
-        }
-        if (convertor.at(from).count(to) != 0)
-        {
-            return fromVal * convertor.at(from).at(to);
-        }
-        map<string, double> m = convertor.at(from);
-        string s;
-        for (map<string, double>::iterator it = m.begin(); it != m.end(); ++it)
-        {
-            s = it->first;
-        }
-        return convertHelp(s, to, convert(from, s, fromVal));
-    }
+    //delete?
+    // double convertHelp(const string &from, const string &to, double fromVal)
+    // {
+    //     if (from == to)
+    //     {
+    //         return fromVal;
+    //     }
+    //     if (convertor.at(from).count(to) != 0)
+    //     {
+    //         return fromVal * convertor.at(from).at(to);
+    //     }
+    //     __throw_invalid_argument("Not valid convertion");
+    // }
+    //delete?
+
+    // double convert(const string &from, const string &to, double fromVal)
+    // {
+    //     if (from == to)
+    //     {
+    //         return fromVal;
+    //     }
+    //     if (convertor.at(from).count(to) != 0)
+    //     {
+    //         return fromVal * convertor.at(from).at(to);
+    //     }
+    //     map<string, double> m = convertor.at(from);
+    //     string s;
+    //     for (map<string, double>::iterator it = m.begin(); it != m.end(); ++it)
+    //     {
+    //         s = it->first;
+    //     }
+    //     return convertHelp(s, to, convert(from, s, fromVal));
+    // }
 
     void NumberWithUnits::read_units(ifstream &file)
     {
@@ -64,9 +75,10 @@ namespace ariel
             {
                 break;
             }
-
-            convertor[Munit1][Munit2] = Dunit2;     //from
-            convertor[Munit2][Munit1] = 1 / Dunit2; //to
+            g.addEdge(Munit1 ,Munit2, (Dunit2/Dunit1)); 
+            //delete?
+            // convertor[Munit1][Munit2] = Dunit2;     //from
+            // convertor[Munit2][Munit1] = 1 / Dunit2; //to
         }
     }
 
