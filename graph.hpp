@@ -14,7 +14,7 @@ class graph{
         map<string,set<string>> _outEdges;
 
     public:
-        set<string>& getMeNodes();
+        bool checkExist(const string& node);
         void print(std::list<std::string> const &list);
         double getConv(const string &src, const string &dst);
         set<string> &_nodes(){}

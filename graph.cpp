@@ -15,8 +15,8 @@ class graph{
         map<string,set<string>> _outEdges;
 
     public:
-        set<string>& getMeNodes(){
-            return _nodes;
+        bool checkExist(const string& node){
+            return (_nodes.count(node) > 0);
         }
         void addOut(const string &src, const string &dst){
             if (_outEdges.count(src) > 0)
